@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!--<div class="header">-->
+<!--  <h2>People</h2>-->
+<!--</div>-->
+
+
+<div class="row">
+  <div class="leftcolumn">
+      {% for item in blog_list %}
+    <div class="card">
+      <h2><a href="{% url 'post'  id=item.id %}">{{ item.title }}</a> </h2>
+      <h5>{{ item.author }}, {{ item.published_date }}</h5>
+      <div class="fakeimg" style="height:200px;">
+          <img src="{% static item.image %}" alt="img" width="100%"></div>
+      <p style="margin-top: 275px;">{{ item.text }}</p>
+    </div>
+
+      {% endfor %}
+  </div>
+</div>
+<!-- <div class="rightcolumn">-->
+<!--    <div class="card">-->
+<!--      <h2>About Me</h2>-->
+<!--      <div class="fakeimg" style="height:100px;">Image</div>-->
+<!--      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>-->
+<!--    </div>-->
+<!--    <div class="card">-->
+<!--      <h3>Popular Post</h3>-->
+<!--      <div class="fakeimg">Image</div><br>-->
+<!--      <div class="fakeimg">Image</div><br>-->
+<!--      <div class="fakeimg">Image</div>-->
+<!--    </div>-->
+<!--    <div class="card">-->
+<!--      <h3>Follow Me</h3>-->
+<!--      <p>Some text..</p>-->
+<!--    </div>-->
+<!--  </div>-->
+</div>
+
+
+
+{% if blog_list.has_other_pages %}
+<ul class="pagination">
+{% if blog_list.has_previous %}
+<li><a href="?page={{ blog_list.previous_page_number }}">&laquo;</a></li>
+{% else %}
+<li class="disabled"><span>&laquo;</span></li>
+{% endif %}
+{% for i in blog_list.paginator.page_range %}
+{% if blog_list.number == i %}
+<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+{% else %}
+<li><a href="?page={{ i }}">{{ i }}</a></li>
+{% endif %}
+{% endfor %}
+{% if users.has_next %}
+<li><a href="?page={{ blog_list.next_page_number }}">&raquo;</a></li>
+{% else %}
+<li class="disabled"><span>&raquo;</span></li>
+{% endif %}
+</ul>
+{% endif %}
+
+
+{% endblock %}

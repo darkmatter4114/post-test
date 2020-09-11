@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+{%for blog in blog%}
+<img src="{% static blog.image %}" alt="img" height="30%" width="100%">
+    <h1>{{ blog.title }}</h1>
+
+    <p>{{ blog.text }}</p>
+    <p>{{ blog.author }}</p>
+    {{ blog.published_date }}
+    <br>
+    <a href="#"> <p class="tags">Tags: {{ blog.tags.all|join:", " }}</p></a>
+    <hr>
+{% endfor %}
+{% endblock %}
